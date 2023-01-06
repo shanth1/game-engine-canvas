@@ -7,8 +7,11 @@ const c = canvas.getContext("2d");
 
 let x = 100;
 
+const clear = () => c.clearRect(0, 0, innerWidth, innerHeight);
+
 const animate = () => {
     requestAnimationFrame(animate);
+    clear();
 
     c.beginPath();
     c.arc(x, canvas.height / 2, 20, 0, Math.PI * 2);
