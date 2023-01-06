@@ -20,4 +20,5 @@ c.lineTo(300, 200);
 c.lineTo(600, 300);
 c.lineTo(600, 600);
 c.lineTo(700, 600);
+c.strokeStyle = "rgba(0, 0, 200, 0.5)";
 c.stroke();
