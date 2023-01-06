@@ -22,3 +22,14 @@ c.lineTo(600, 600);
 c.lineTo(700, 600);
 c.strokeStyle = "rgba(0, 0, 200, 0.5)";
 c.stroke();
+
+x = canvas.width / 2;
+y = canvas.height / 2;
+radius = 100;
+startAngle = 0;
+endAngle = Math.PI / 2;
+counterclockwise = false;
+c.beginPath(); // Separate lines
+c.arc(x, y, radius, startAngle, endAngle, counterclockwise);
+c.strokeStyle = "green";
+c.stroke();
