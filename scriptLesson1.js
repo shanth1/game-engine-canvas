@@ -23,13 +23,12 @@ c.lineTo(700, 600);
 c.strokeStyle = "rgba(0, 0, 200, 0.5)";
 c.stroke();
 
-x = canvas.width / 2;
-y = canvas.height / 2;
-radius = 100;
-startAngle = 0;
-endAngle = Math.PI / 2;
-counterclockwise = false;
-c.beginPath(); // Separate lines
-c.arc(x, y, radius, startAngle, endAngle, counterclockwise);
-c.strokeStyle = "green";
-c.stroke();
+const colors = ["#441538", "#853c4f", "#243571", "#9680b9", "#ffd8ff"];
+for (let i = 0; i < 50; i++) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    c.beginPath();
+    c.arc(x, y, 50, 0, Math.PI * 2);
+    c.strokeStyle = colors[Math.floor(Math.random() * colors.length)];
+    c.stroke();
+}
