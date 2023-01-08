@@ -53,13 +53,19 @@ class Circle {
     };
 }
 
-const circle = new Circle(20);
+const circleArray = [];
+
+for (let i = 0; i < 100; i++) {
+    circleArray.push(new Circle(20));
+}
 
 const animate = () => {
     requestAnimationFrame(animate);
     clear();
-    circle.draw();
-    circle.update();
+    circleArray.map((circle) => {
+        circle.draw();
+        circle.update();
+    });
 };
 
 animate();
