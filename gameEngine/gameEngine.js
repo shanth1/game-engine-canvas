@@ -12,7 +12,40 @@ const getRandomPosition = (canvas, radius) => [
     radius + Math.random() * (canvas.height - 2 * radius),
 ];
 
-const clear = () => c.clearRect(0, 0, canvas.width, canvas.height);
+class Game {
+    constructor(id, width = window.innerWidth, height = window.innerHeight) {
+        this.canvas = document.getElementById(id);
+        this.ctx = this.canvas.getContext("2d");
+        this.canvas.width = width;
+        this.canvas.height = height;
+    }
+
+    _workWithFigures(figures) {
+        if (figures.length) {
+            figures.map((figure) => {
+                figure.draw();
+                figure.update();
+            });
+        }
+    }
+
+    _clear() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    animate = (figures = [], arraysOfFigures = [[]]) => {
+        requestAnimationFrame(this.animate);
+        this._clear();
+        this._workWithFigures(figures);
+
+        arraysOfFigures.map((figures) => {
+            this._workWithFigures(figures);
+        });
+    };
+}
+
+const canvas = new Game("lesson_1", 800, 600);
+canvas.animate();
 
 class Circle {
     constructor(
