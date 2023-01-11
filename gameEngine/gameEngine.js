@@ -15,61 +15,63 @@ const getRandomPosition = (canvas, radius) => [
 class Game {
     constructor(id, width = window.innerWidth, height = window.innerHeight) {
         this.canvas = document.getElementById(id);
-        this.ctx = this.canvas.getContext("2d");
+        this.context = this.canvas.getContext("2d");
         this.canvas.width = width;
         this.canvas.height = height;
+
+        this._figures = [];
+    }
+
+    addFigures(figures) {
+        this._figures.push(...figures);
+    }
+
+    addArraysOfFigures(arrays) {
+        arrays.map((figures) => {
+            this._figures.push(...figures);
+        });
     }
 
     _workWithFigures(figures) {
         if (figures.length) {
             figures.map((figure) => {
-                figure.draw();
-                figure.update();
+                figure.draw(this.context);
+                figure.update(this.canvas);
             });
         }
     }
 
     _clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    animate = (figures = [], arraysOfFigures = [[]]) => {
+    draw() {
+        this._workWithFigures(this._figures);
+    }
+
+    animate = () => {
         requestAnimationFrame(this.animate);
         this._clear();
-        this._workWithFigures(figures);
-
-        arraysOfFigures.map((figures) => {
-            this._workWithFigures(figures);
-        });
+        this.draw();
     };
 }
 
-const canvas = new Game("lesson_1", 800, 600);
-canvas.animate();
-
 class Circle {
-    constructor(
-        radius,
-        filled = false,
-        [x, y] = getRandomPosition(canvas, radius),
-        [dx, dy] = getRandomVelocityVector(2, 4),
-    ) {
+    constructor(radius, x, y, dx, dy) {
         this.radius = radius;
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        this.filled = filled;
     }
 
-    draw = () => {
-        c.beginPath();
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        c.stroke();
-        if (this.filled) c.fill();
+    draw = (context) => {
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.stroke();
     };
 
-    update = () => {
+    update = (canvas) => {
         if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
             this.dy = -this.dy;
         }
@@ -81,3 +83,23 @@ class Circle {
         this.y += this.dy;
     };
 }
+
+const game = new Game("lesson_1", 1000, 600);
+const circle1 = new Circle(20, 100, 100, 5, -3);
+const circle2 = new Circle(20, 100, 100, 2, 3);
+const arrayOfCircles = [];
+
+for (let i = 0; i < 100; i++) {
+    arrayOfCircles.push(
+        new Circle(
+            30,
+            getRandomPosition(game.canvas, 30)[0],
+            getRandomPosition(game.canvas, 30)[1],
+            getRandomVelocityVector(1, 2)[0],
+            getRandomVelocityVector(3, 5)[1],
+        ),
+    );
+}
+game.addFigures([circle1, circle2]);
+game.addArraysOfFigures([arrayOfCircles]);
+game.animate();
