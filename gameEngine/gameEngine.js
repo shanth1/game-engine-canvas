@@ -57,8 +57,11 @@ class Game {
 }
 
 class Circle {
-    constructor(radius, x, y, dx, dy) {
-        this.radius = radius;
+    constructor(radius, x, y, dx, dy, elasticity = 0) {
+        this._minRadius = radius * (1 - elasticity / 4);
+        this._maxRadius = radius;
+        this._radiusX = this._maxRadius;
+        this._radiusY = this._maxRadius;
         this.x = x;
         this.y = y;
         this.dx = dx;
@@ -67,15 +70,60 @@ class Circle {
 
     draw = (context) => {
         context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.ellipse(
+            this.x,
+            this.y,
+            this._radiusX,
+            this._radiusY,
+            0,
+            0,
+            2 * Math.PI,
+        );
         context.stroke();
     };
 
     update = (canvas) => {
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+        // Up
+        if (this.y - this._maxRadius < 0 && this.dy < 0) {
+            this._radiusY -= Math.abs(this.dy);
+        }
+        if (this.y - this._maxRadius <= 0 && this.dy > 0) {
+            this._radiusY += Math.abs(this.dy);
+        }
+        if (this.y - this._minRadius < 0) {
             this.dy = -this.dy;
         }
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+
+        // Down
+        if (this.y + this._maxRadius > canvas.height && this.dy > 0) {
+            this._radiusY -= Math.abs(this.dy);
+        }
+        if (this.y + this._maxRadius >= canvas.height && this.dy < 0) {
+            this._radiusY += Math.abs(this.dy);
+        }
+        if (this.y + this._minRadius > canvas.height) {
+            this.dy = -this.dy;
+        }
+
+        // Left
+        if (this.x - this._maxRadius < 0 && this.dx < 0) {
+            this._radiusX -= Math.abs(this.dx);
+        }
+        if (this.x - this._maxRadius <= 0 && this.dx > 0) {
+            this._radiusX += Math.abs(this.dx);
+        }
+        if (this.x - this._minRadius < 0) {
+            this.dx = -this.dx;
+        }
+
+        // Right
+        if (this.x + this._maxRadius > canvas.width && this.dx > 0) {
+            this._radiusX -= Math.abs(this.dx);
+        }
+        if (this.x + this._maxRadius >= canvas.width && this.dx < 0) {
+            this._radiusX += Math.abs(this.dx);
+        }
+        if (this.x + this._minRadius > canvas.width) {
             this.dx = -this.dx;
         }
 
@@ -85,21 +133,22 @@ class Circle {
 }
 
 const game = new Game("lesson_1", 1000, 600);
-const circle1 = new Circle(20, 100, 100, 5, -3);
-const circle2 = new Circle(20, 100, 100, 2, 3);
+const circle1 = new Circle(20, 100, 200, -2, -5, 1);
+const circle2 = new Circle(20, 100, 100, 2, -1);
 const arrayOfCircles = [];
 
-for (let i = 0; i < 100; i++) {
-    arrayOfCircles.push(
-        new Circle(
-            30,
-            getRandomPosition(game.canvas, 30)[0],
-            getRandomPosition(game.canvas, 30)[1],
-            getRandomVelocityVector(1, 2)[0],
-            getRandomVelocityVector(3, 5)[1],
-        ),
-    );
-}
+// for (let i = 0; i < 10; i++) {
+//     arrayOfCircles.push(
+//         new Circle(
+//             20,
+//             getRandomPosition(game.canvas, 30)[0],
+//             getRandomPosition(game.canvas, 30)[1],
+//             getRandomVelocityVector(1, 2)[0],
+//             getRandomVelocityVector(3, 5)[1],
+//             1,
+//         ),
+//     );
+// }
 game.addFigures([circle1, circle2]);
 game.addArraysOfFigures([arrayOfCircles]);
 game.animate();
