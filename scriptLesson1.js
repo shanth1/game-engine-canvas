@@ -1,6 +1,6 @@
 const canvas = document.getElementById("lesson_1");
 
-canvas.width = window.innerWidth * 0.6;
+canvas.width = window.innerWidth * 0.8;
 canvas.height = 600;
 
 canvas.x = canvas.getBoundingClientRect().left;
@@ -38,6 +38,11 @@ window.addEventListener("mousemove", (event) => {
     mouse.y = event.y;
 });
 
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = 600;
+});
+
 class Circle {
     constructor(
         radius,
@@ -61,11 +66,23 @@ class Circle {
     };
 
     update = () => {
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-            this.dy = -this.dy;
+        // if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+        //     this.dy = -this.dy;
+        // }
+        // if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+        //     this.dx = -this.dx;
+        // }
+        if (this.y + this.radius > canvas.height) {
+            this.dy = -Math.abs(this.dy);
         }
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-            this.dx = -this.dx;
+        if (this.x + this.radius > canvas.width) {
+            this.dx = -Math.abs(this.dx);
+        }
+        if (this.x - this.radius < 0) {
+            this.dx = Math.abs(this.dx);
+        }
+        if (this.y - this.radius < 0) {
+            this.dy = Math.abs(this.dy);
         }
 
         this.x += this.dx;
