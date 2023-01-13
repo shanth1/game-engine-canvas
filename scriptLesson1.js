@@ -41,6 +41,8 @@ window.addEventListener("mousemove", (event) => {
 window.addEventListener("resize", () => {
     canvas.width = window.innerWidth * 0.8;
     canvas.height = 600;
+
+    init();
 });
 
 class Circle {
@@ -66,23 +68,11 @@ class Circle {
     };
 
     update = () => {
-        // if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-        //     this.dy = -this.dy;
-        // }
-        // if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-        //     this.dx = -this.dx;
-        // }
-        if (this.y + this.radius > canvas.height) {
-            this.dy = -Math.abs(this.dy);
+        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+            this.dy = -this.dy;
         }
-        if (this.x + this.radius > canvas.width) {
-            this.dx = -Math.abs(this.dx);
-        }
-        if (this.x - this.radius < 0) {
-            this.dx = Math.abs(this.dx);
-        }
-        if (this.y - this.radius < 0) {
-            this.dy = Math.abs(this.dy);
+        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+            this.dx = -this.dx;
         }
 
         this.x += this.dx;
@@ -103,11 +93,14 @@ class Circle {
     };
 }
 
-const circleArray = [];
+let circleArray = [];
 
-for (let i = 0; i < 1000; i++) {
-    circleArray.push(new Circle(Math.random() * 5 + 5));
-}
+const init = () => {
+    circleArray = [];
+    for (let i = 0; i < 1000; i++) {
+        circleArray.push(new Circle(Math.random() * 5 + 5));
+    }
+};
 
 const animate = () => {
     requestAnimationFrame(animate);
@@ -118,4 +111,5 @@ const animate = () => {
     });
 };
 
+init();
 animate();
