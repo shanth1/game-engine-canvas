@@ -1,7 +1,10 @@
 const canvas = document.getElementById("lesson_1");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth * 0.6;
+canvas.height = 600;
+
+canvas.x = canvas.getBoundingClientRect().left;
+canvas.y = canvas.getBoundingClientRect().top;
 
 const c = canvas.getContext("2d");
 
@@ -66,8 +69,8 @@ class Circle {
         this.y += this.dy;
 
         if (
-            Math.abs(mouse.x - this.x) < 50 &&
-            Math.abs(mouse.y - this.y) < 50
+            Math.abs(mouse.x - (this.x + canvas.x)) < 50 &&
+            Math.abs(mouse.y - (this.y + canvas.y)) < 50
         ) {
             if (this.radius < maxRadius) {
                 this.radius += 2;
