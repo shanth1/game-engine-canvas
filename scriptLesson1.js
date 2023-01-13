@@ -89,7 +89,7 @@ class Circle {
 const circleArray = [];
 
 for (let i = 0; i < 1000; i++) {
-    circleArray.push(new Circle(5));
+    circleArray.push(new Circle(Math.random() * 5 + 5));
 }
 
 const animate = () => {
