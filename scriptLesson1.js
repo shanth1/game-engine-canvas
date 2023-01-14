@@ -1,28 +1,8 @@
-const canvas = document.getElementById("lesson_1");
+const canvas_lsn1 = document.getElementById("lesson_1");
 
-canvas.width = window.innerWidth * 0.8;
-canvas.height = 600;
+const c = canvas_lsn1.getContext("2d");
 
-canvas.x = canvas.getBoundingClientRect().left;
-canvas.y = canvas.getBoundingClientRect().top;
-
-const c = canvas.getContext("2d");
-
-const clear = () => c.clearRect(0, 0, canvas.width, canvas.height);
-
-const getRandomNumberOfRange = (min, max) => Math.random() * (max - min) + min;
-
-const getRandomSign = () => (Math.random() < 0.5 ? -1 : 1);
-
-const getRandomVelocityVector = (min, max) => [
-    getRandomSign() * getRandomNumberOfRange(min, max),
-    getRandomSign() * getRandomNumberOfRange(min, max),
-];
-
-const getRandomPosition = (canvas, radius) => [
-    radius + Math.random() * (canvas.width - 2 * radius),
-    radius + Math.random() * (canvas.height - 2 * radius),
-];
+const clear = () => c.clearRect(0, 0, canvas_lsn1.width, canvas_lsn1.height);
 
 const mouse = {
     x: undefined,
@@ -39,16 +19,27 @@ window.addEventListener("mousemove", (event) => {
 });
 
 window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = 600;
-
+    setSize();
     init();
 });
 
-class Circle {
+window.addEventListener("scroll", () => {
+    setSize();
+});
+
+const setSize = () => {
+    canvas_lsn1.width = canvas_lsn1.offsetWidth;
+    canvas_lsn1.height = canvas_lsn1.offsetHeight;
+    canvas_lsn1.x = canvas_lsn1.getBoundingClientRect().left;
+    canvas_lsn1.y = canvas_lsn1.getBoundingClientRect().top;
+};
+
+setSize();
+
+class Circle_lsn1 {
     constructor(
         radius,
-        [x, y] = getRandomPosition(canvas, radius),
+        [x, y] = getRandomPosition(canvas_lsn1, radius),
         [dx, dy] = getRandomVelocityVector(1, 2),
     ) {
         this.radius = radius;
@@ -68,10 +59,16 @@ class Circle {
     };
 
     update = () => {
-        if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+        if (
+            this.y + this.radius > canvas_lsn1.height ||
+            this.y - this.radius < 0
+        ) {
             this.dy = -this.dy;
         }
-        if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+        if (
+            this.x + this.radius > canvas_lsn1.width ||
+            this.x - this.radius < 0
+        ) {
             this.dx = -this.dx;
         }
 
@@ -79,8 +76,8 @@ class Circle {
         this.y += this.dy;
 
         if (
-            Math.abs(mouse.x - (this.x + canvas.x)) < 50 &&
-            Math.abs(mouse.y - (this.y + canvas.y)) < 50
+            Math.abs(mouse.x - (this.x + canvas_lsn1.x)) < 50 &&
+            Math.abs(mouse.y - (this.y + canvas_lsn1.y)) < 50
         ) {
             if (this.radius < maxRadius) {
                 this.radius += 2;
@@ -98,7 +95,7 @@ let circleArray = [];
 const init = () => {
     circleArray = [];
     for (let i = 0; i < 1000; i++) {
-        circleArray.push(new Circle(Math.random() * 5 + 5));
+        circleArray.push(new Circle_lsn1(Math.random() * 5 + 5));
     }
 };
 

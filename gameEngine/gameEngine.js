@@ -132,7 +132,7 @@ class Circle {
     };
 }
 
-const game = new Game("lesson_1", 1000, 600);
+const game = new Game("game_engine", 400, 400);
 const circle1 = new Circle(20, 100, 200, -2, -5, 1);
 const circle2 = new Circle(20, 100, 100, 2, -1);
 const arrayOfCircles = [];
