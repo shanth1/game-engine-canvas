@@ -5,12 +5,12 @@ canvas_gravity.height = 500;
 const g_ctx = canvas_gravity.getContext("2d");
 
 class CircleGravity {
-    constructor(x, y, radius, dx = 0, dy = 0, dv = 0.5) {
+    constructor(x, y, radius, dx = 0, dy = 0, dVy = 0.5) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        this.dv = dv;
+        this.dVy = dVy;
         this.radius = radius;
         this.radiusX = radius;
         this.radiusY = radius;
@@ -30,7 +30,16 @@ class CircleGravity {
         g_ctx.fill();
     };
 
-    update = () => {};
+    update = () => {
+        if (this.y + this.radius > canvas_gravity.height) {
+            this.dy = -this.dy;
+        } else {
+            this.dy += this.dVy;
+        }
+        this.y += this.dy;
+
+        console.log(this.y, this.dy);
+    };
 }
 
 const circle_gravity = new CircleGravity(canvas_gravity.width / 2, 50, 20);
