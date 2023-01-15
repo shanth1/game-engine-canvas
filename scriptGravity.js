@@ -5,15 +5,18 @@ canvas_gravity.height = 500;
 const g_ctx = canvas_gravity.getContext("2d");
 
 class CircleGravity {
-    constructor(x, y, radius, dx = 0, dy = 0, dVy = 0.5) {
+    constructor(x, y, radius, friction = 0.2, dx = 0, dy = 2, gravity = 1) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        this.dVy = dVy;
+        this.acc_x = 0;
+        this.acc_y = 0;
         this.radius = radius;
         this.radiusX = radius;
         this.radiusY = radius;
+        this.friction = friction;
+        this.g = gravity;
     }
 
     draw = () => {
@@ -31,18 +34,22 @@ class CircleGravity {
     };
 
     update = () => {
-        if (this.y + this.radius > canvas_gravity.height) {
-            this.dy = -this.dy;
-        } else {
-            this.dy += this.dVy;
+        if (this.y + this.radius >= canvas_gravity.height) {
+            this.dy = -this.dy * (1 - this.friction);
+            this.acc_y = 0;
         }
-        this.y += this.dy;
 
-        console.log(this.y, this.dy);
+        if (this.y + this.radius + this.dy < canvas_gravity.height) {
+            this.dy += this.acc_y;
+            this.y += this.dy;
+        } else {
+            this.y = canvas_gravity.height - this.radius;
+        }
+        this.acc_y = this.g;
     };
 }
 
-const circle_gravity = new CircleGravity(canvas_gravity.width / 2, 50, 20);
+const circle_gravity = new CircleGravity(canvas_gravity.width / 2, 50, 30, 0.2);
 
 const animate_gravity = () => {
     requestAnimationFrame(animate_gravity);
