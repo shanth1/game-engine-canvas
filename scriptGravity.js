@@ -39,7 +39,7 @@ class CircleGravity {
             this.acc_y = 0;
         }
 
-        if (this.y + this.radius + this.dy < canvas_gravity.height) {
+        if (this.y + this.radius + this.dy + this.g <= canvas_gravity.height) {
             this.dy += this.acc_y;
             this.y += this.dy;
         } else {
