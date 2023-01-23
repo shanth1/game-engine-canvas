@@ -1,5 +1,11 @@
 import engine from "./gameEngine/engine.js";
 import { Game, Circle, random } from "./gameEngine/engine.js";
+import {
+    Matrix,
+    NullMatrix,
+    UnitMatrix,
+    ScalarMatrix,
+} from "./gameEngine/utils/Math/Matrix.js";
 
 const game = new Game("game_engine", 400, 400);
 const circle1 = new Circle(20, 100, 200, -2, -5, 1);
@@ -21,3 +27,6 @@ const arrayOfCircles = [];
 game.addFigures([circle1, circle2]);
 game.addArraysOfFigures([arrayOfCircles]);
 game.animate();
+
+const arr = new NullMatrix(7, 3);
+arr.consoleMatrix();

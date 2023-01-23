@@ -27,5 +27,45 @@
  */
 
 export class Matrix {
+    constructor(array) {
+        this.m = array.length;
+        this.n = array[0].length;
+        this.array = array;
+    }
+
+    consoleMatrix = () => {
+        console.log(this.array);
+    };
+
+    getDeterminant = () => {};
+    transpose = () => {};
+
+    addMatrix = (matrix) => {};
+    multiplyMatrix = (matrix) => {};
+    multiplyScalar = (scalar) => {}; // scale
+}
+
+export class DiagonalMatrix extends Matrix {
     constructor() {}
+}
+
+export class ScalarMatrix extends DiagonalMatrix {
+    constructor(n, scalar) {}
+}
+
+export class UnitMatrix extends ScalarMatrix {
+    constructor(n) {}
+}
+
+export class NullMatrix extends Matrix {
+    constructor(m, n) {
+        const array = [];
+        for (let i = 0; i < m; i++) {
+            array.push([]);
+            for (let j = 0; j < n; j++) {
+                array[i].push(0);
+            }
+        }
+        super(array);
+    }
 }
