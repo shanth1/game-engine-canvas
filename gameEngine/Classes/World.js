@@ -1,5 +1,6 @@
 export class World {
-    constructor(visible) {
+    constructor(gravity = 0, visible = true) {
+        this.gravity = gravity;
         this.visible = visible;
         this._objects = [];
     }
@@ -27,8 +28,9 @@ export class World {
     draw() {
         if (this._objects.length) {
             this._objects.map((object) => {
+                object.gravity = this.gravity;
                 object.draw(this.context);
-                object.update();
+                object.update(this.canvas);
             });
         }
     }

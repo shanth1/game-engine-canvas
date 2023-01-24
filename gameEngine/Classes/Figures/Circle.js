@@ -1,14 +1,5 @@
 export class Circle {
-    constructor(
-        x,
-        y,
-        radius,
-        friction = 0.2,
-        dx = 0,
-        dy = 2,
-        gravity = 1,
-        elasticity = 0,
-    ) {
+    constructor(x, y, radius, friction = 0.2, dx = 0, dy = 2, elasticity = 0) {
         this.x = x;
         this.y = y;
         this.dx = dx;
@@ -17,7 +8,6 @@ export class Circle {
         this.acc_y = 0;
         this.radius = radius;
         this.friction = friction;
-        this.g = gravity;
 
         this._minRadius = radius * (1 - elasticity / 4);
         this._maxRadius = radius;
@@ -25,9 +15,9 @@ export class Circle {
         this._radiusY = this._maxRadius;
     }
 
-    draw = () => {
-        g_ctx.beginPath();
-        g_ctx.ellipse(
+    draw = (context) => {
+        context.beginPath();
+        context.ellipse(
             this.x,
             this.y,
             this._radiusX,
@@ -36,21 +26,23 @@ export class Circle {
             0,
             2 * Math.PI,
         );
-        g_ctx.fill();
+        context.fill();
     };
 
-    update = () => {
-        if (this.y + this.radius >= canvas_gravity.height) {
+    update = (canvas) => {
+        if (this.y + this.radius >= canvas.height) {
             this.dy = -this.dy * (1 - this.friction);
             this.acc_y = 0;
         }
 
-        if (this.y + this.radius + this.dy + this.g <= canvas_gravity.height) {
+        if (this.y + this.radius + this.dy + this.gravity <= canvas.height) {
             this.dy += this.acc_y;
             this.y += this.dy;
         } else {
-            this.y = canvas_gravity.height - this.radius;
+            this.y = canvas.height - this.radius;
         }
-        this.acc_y = this.g;
+        this.acc_y = this.gravity;
+
+        this.x += this.dx;
     };
 }

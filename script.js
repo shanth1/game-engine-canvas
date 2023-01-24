@@ -4,16 +4,10 @@ import { World } from "./gameEngine/engine.js";
 
 const game = new Game("game_engine", 600, 400);
 
-const world1 = new World(true);
+const world1 = new World(true, 1);
 game.addWorld(world1);
 
-const circle1 = new Circle(5, 100, 100, 1, 2);
-const circle2 = new Circle(5, 100, 100, -1, 2);
-const circle3 = new Circle(10, 100, 100, 1, 2);
-const circle4 = new Circle(15, 100, 100, -1, 2);
-world1.addArrayOfObjectList([
-    [circle1, circle2],
-    [circle3, circle4],
-]);
+const circle1 = new Circle(100, 100, 10, 0, 0, 0);
+world1.addObject(circle1);
 
 game.start();
