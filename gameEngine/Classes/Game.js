@@ -1,43 +1,29 @@
 export class Game {
     constructor(id, width = window.innerWidth, height = window.innerHeight) {
         this.canvas = document.getElementById(id);
-        this.context = this.canvas.getContext("2d");
         this.canvas.width = width;
         this.canvas.height = height;
-
-        this._figures = [];
+        this.worldList = [];
     }
 
-    addFigures(figures) {
-        this._figures.push(...figures);
-    }
+    addWorld = (worldObj) => {
+        worldObj.canvas = this.canvas;
+        worldObj.context = this.canvas.getContext("2d");
+        this.worldList.push(worldObj);
+    };
 
-    addArraysOfFigures(arrays) {
-        arrays.map((figures) => {
-            this._figures.push(...figures);
-        });
-    }
-
-    _workWithFigures(figures) {
-        if (figures.length) {
-            figures.map((figure) => {
-                figure.draw(this.context);
-                figure.update(this.canvas);
-            });
+    _animate = () => {
+        if (this.worldList.length) {
+            requestAnimationFrame(this._animate);
+            for (let i = 0; i < this.worldList.length; i++) {
+                if (!this.worldList[i].visible) continue;
+                this.worldList[i].clear();
+                this.worldList[i].draw();
+            }
         }
-    }
+    };
 
-    _clear() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-    draw() {
-        this._workWithFigures(this._figures);
-    }
-
-    animate = () => {
-        requestAnimationFrame(this.animate);
-        this._clear();
-        this.draw();
+    start = () => {
+        this._animate();
     };
 }
