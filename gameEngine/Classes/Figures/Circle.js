@@ -36,6 +36,17 @@ export class Circle {
             2 * Math.PI,
         );
         context.fill();
+
+        context.beginPath();
+        context.moveTo(this.x, this.y);
+        context.lineTo(this.x + this.acc_x * 100, this.y + this.acc_y * 100);
+        context.strokeStyle = "green";
+        context.stroke();
+        context.beginPath();
+        context.moveTo(this.x, this.y);
+        context.lineTo(this.x + this.dx * 10, this.y + this.dy * 10);
+        context.strokeStyle = "red";
+        context.stroke();
     };
 
     update = (canvas) => {
