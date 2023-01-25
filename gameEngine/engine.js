@@ -19,4 +19,4 @@ const engine = {
 };
 
 export default engine;
-export { Game, Circle, World, random };
+export { Game, Circle, Player, World, random };

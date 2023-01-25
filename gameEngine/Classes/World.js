@@ -3,6 +3,7 @@ export class World {
         this.gravity = gravity;
         this.visible = visible;
         this._objects = [];
+        this._players = [];
     }
 
     addLight = () => {};
@@ -21,16 +22,28 @@ export class World {
         });
     }
 
+    addPlayer = (player) => {
+        this._players.push(player);
+    };
+
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     draw() {
         if (this._objects.length) {
-            this._objects.map((object) => {
+            this._objects.forEach((object) => {
                 object.gravity = this.gravity;
                 object.draw(this.context);
                 object.update(this.canvas);
+            });
+        }
+        if (this._players.length) {
+            this._players.forEach((player) => {
+                player.gravity = this.gravity;
+                player.draw(this.context);
+                player.update(this.canvas);
+                player.move();
             });
         }
     }
