@@ -1,11 +1,20 @@
 export class Circle {
-    constructor(x, y, radius, friction = 0.2, dx = 0, dy = 0, elasticity = 0) {
+    constructor(
+        x,
+        y,
+        radius,
+        friction = 0,
+        acceleration = 0,
+        elasticity = 0,
+        dx = 0,
+        dy = 0,
+    ) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        this.acc_x = 0;
-        this.acc_y = 0;
+        this.acc_x = acceleration;
+        this.acc_y = acceleration;
         this.radius = radius;
         this.friction = friction;
 

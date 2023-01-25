@@ -1,10 +1,21 @@
 import { Circle } from "../Figures/Circle.js";
 
 export class Player extends Circle {
-    constructor(x, y, radius, speed = 2) {
+    constructor(x, y, radius, acceleration = 1) {
         super(x, y, radius);
-        this.speed = speed;
+        this.acc_x = 0;
+        this.acc_y = 0;
+        this.acceleration = acceleration;
+
+        this.friction = 0.1;
+
+        this.up = false;
+        this.down = false;
+        this.left = false;
+        this.right = false;
     }
+
+    update = () => {};
 
     keyControlTopDown = () => {
         document.addEventListener("keydown", (event) => {
@@ -39,16 +50,30 @@ export class Player extends Circle {
 
     move = () => {
         if (this.up) {
-            this.y -= this.speed;
+            this.acc_y = -this.acceleration;
         }
         if (this.down) {
-            this.y += this.speed;
+            this.acc_y = this.acceleration;
         }
         if (this.left) {
-            this.x -= this.speed;
+            this.acc_x = -this.acceleration;
         }
         if (this.right) {
-            this.x += this.speed;
+            this.acc_x = this.acceleration;
         }
+
+        if (!this.up && !this.down) {
+            this.acc_y = 0;
+        }
+        if (!this.left && !this.right) {
+            this.acc_x = 0;
+        }
+
+        this.dx += this.acc_x;
+        this.dy += this.acc_y;
+        this.dx *= 1 - this.friction;
+        this.dy *= 1 - this.friction;
+        this.x += this.dx;
+        this.y += this.dy;
     };
 }
