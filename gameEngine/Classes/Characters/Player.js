@@ -1,11 +1,9 @@
+import { Vec2 } from "../../utils/Math/Vector.js";
 import { Circle } from "../Figures/Circle.js";
 
 export class Player extends Circle {
     constructor(x, y, radius, acceleration = 1) {
         super(x, y, radius);
-        this.acc_x = 0;
-        this.acc_y = 0;
-        this.acceleration = acceleration;
 
         this.friction = 0.1;
 
@@ -48,32 +46,44 @@ export class Player extends Circle {
         });
     };
 
-    move = () => {
+    move = (context) => {
         if (this.up) {
-            this.acc_y = -this.acceleration;
+            this.acceleration.y = -1;
         }
         if (this.down) {
-            this.acc_y = this.acceleration;
+            this.acceleration.y = 1;
         }
         if (this.left) {
-            this.acc_x = -this.acceleration;
+            this.acceleration.x = -1;
         }
         if (this.right) {
-            this.acc_x = this.acceleration;
+            this.acceleration.x = 1;
         }
 
         if (!this.up && !this.down) {
-            this.acc_y = 0;
+            this.acceleration.y = 0;
         }
         if (!this.left && !this.right) {
-            this.acc_x = 0;
+            this.acceleration.x = 0;
         }
 
-        this.dx += this.acc_x;
-        this.dy += this.acc_y;
-        this.dx *= 1 - this.friction;
-        this.dy *= 1 - this.friction;
-        this.x += this.dx;
-        this.y += this.dy;
+        this.velocity = this.velocity.add(this.acceleration);
+        this.velocity = this.velocity.scale(1 - this.friction);
+        this.position = this.position.add(this.velocity);
+
+        this.velocity.drawVector(
+            context,
+            this.position.x,
+            this.position.y,
+            10,
+            "green",
+        );
+        this.acceleration.drawVector(
+            context,
+            this.position.x,
+            this.position.y,
+            60,
+            "red",
+        );
     };
 }

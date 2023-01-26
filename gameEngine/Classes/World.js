@@ -43,7 +43,7 @@ export class World {
                 player.gravity = this.gravity;
                 player.draw(this.context);
                 player.update(this.canvas);
-                player.move();
+                player.move(this.context);
             });
         }
     }

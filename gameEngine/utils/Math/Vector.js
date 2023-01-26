@@ -3,9 +3,9 @@ export class Vec2 {
         this.x = x;
         this.y = y;
     }
-    add = (vec) => new Vector(this.x + vec.x, this.y + vec.y);
-    subtract = (vec) => new Vector(this.x - vec.x, this.y - vec.y);
-    scale = (scalar) => new Vector(this.x * scalar, this.y * scalar);
+    add = (vec) => new Vec2(this.x + vec.x, this.y + vec.y);
+    subtract = (vec) => new Vec2(this.x - vec.x, this.y - vec.y);
+    scale = (scalar) => new Vec2(this.x * scalar, this.y * scalar);
     dotProduct = (vec) => this.x * vec.x + this.y * vec.y;
     crossProduct = (vec) => new Vec3(0, 0, this.x * vec.y - this.y * vec.x);
 
@@ -35,7 +35,13 @@ export class Vec2 {
         );
     };
 
-    drawVector = () => {};
+    drawVector = (context, startX, startY, n, color) => {
+        context.beginPath();
+        context.moveTo(startX, startY);
+        context.lineTo(startX + this.x * n, startY + this.y * n);
+        context.strokeStyle = color;
+        context.stroke();
+    };
 }
 
 export class Vec3 extends Vec2 {

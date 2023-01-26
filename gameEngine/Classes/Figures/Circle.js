@@ -1,22 +1,13 @@
+import { Vec2 } from "../../utils/Math/Vector.js";
+
 export class Circle {
-    constructor(
-        x,
-        y,
-        radius,
-        friction = 0,
-        acceleration = 0,
-        elasticity = 0,
-        dx = 0,
-        dy = 0,
-    ) {
-        this.x = x;
-        this.y = y;
-        this.dx = dx;
-        this.dy = dy;
-        this.acc_x = acceleration;
-        this.acc_y = acceleration;
+    constructor(x, y, radius, friction = 0, elasticity = 0) {
         this.radius = radius;
         this.friction = friction;
+
+        this.position = new Vec2(x, y);
+        this.velocity = new Vec2(0, 0);
+        this.acceleration = new Vec2(0, 0);
 
         this._minRadius = radius * (1 - elasticity / 4);
         this._maxRadius = radius;
@@ -27,8 +18,8 @@ export class Circle {
     draw = (context) => {
         context.beginPath();
         context.ellipse(
-            this.x,
-            this.y,
+            this.position.x,
+            this.position.y,
             this._radiusX,
             this._radiusY,
             0,
@@ -36,33 +27,7 @@ export class Circle {
             2 * Math.PI,
         );
         context.fill();
-
-        context.beginPath();
-        context.moveTo(this.x, this.y);
-        context.lineTo(this.x + this.acc_x * 100, this.y + this.acc_y * 100);
-        context.strokeStyle = "green";
-        context.stroke();
-        context.beginPath();
-        context.moveTo(this.x, this.y);
-        context.lineTo(this.x + this.dx * 10, this.y + this.dy * 10);
-        context.strokeStyle = "red";
-        context.stroke();
     };
 
-    update = (canvas) => {
-        if (this.y + this.radius >= canvas.height) {
-            this.dy = -this.dy * (1 - this.friction);
-            this.acc_y = 0;
-        }
-
-        if (this.y + this.radius + this.dy + this.gravity <= canvas.height) {
-            this.dy += this.acc_y;
-            this.y += this.dy;
-        } else {
-            this.y = canvas.height - this.radius;
-        }
-        this.acc_y = this.gravity;
-
-        this.x += this.dx;
-    };
+    update = (canvas) => {};
 }
