@@ -6,7 +6,7 @@ const game = new Game("game_engine", 600, 400);
 const world1 = new World(1);
 game.addWorld(world1);
 
-const player = new Player(100, 100, 15, 1);
+const player = new Player(100, 100, 15);
 player.keyControlTopDown();
 
 world1.addPlayer(player);

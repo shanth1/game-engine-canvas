@@ -6,6 +6,7 @@ export class Player extends Circle {
         super(x, y, radius);
 
         this.friction = 0.1;
+        this.acc = acceleration;
 
         this.up = false;
         this.down = false;
@@ -48,16 +49,16 @@ export class Player extends Circle {
 
     move = (context) => {
         if (this.up) {
-            this.acceleration.y = -1;
+            this.acceleration.y = -this.acc;
         }
         if (this.down) {
-            this.acceleration.y = 1;
+            this.acceleration.y = this.acc;
         }
         if (this.left) {
-            this.acceleration.x = -1;
+            this.acceleration.x = -this.acc;
         }
         if (this.right) {
-            this.acceleration.x = 1;
+            this.acceleration.x = this.acc;
         }
 
         if (!this.up && !this.down) {
@@ -67,9 +68,13 @@ export class Player extends Circle {
             this.acceleration.x = 0;
         }
 
-        this.velocity = this.velocity.add(this.acceleration);
-        this.velocity = this.velocity.scale(1 - this.friction);
-        this.position = this.position.add(this.velocity);
+        this.acceleration.drawVector(
+            context,
+            this.position.x,
+            this.position.y,
+            60,
+            "red",
+        );
 
         this.velocity.drawVector(
             context,
@@ -78,12 +83,10 @@ export class Player extends Circle {
             10,
             "green",
         );
-        this.acceleration.drawVector(
-            context,
-            this.position.x,
-            this.position.y,
-            60,
-            "red",
-        );
+
+        this.acceleration = this.acceleration.getUnitVector().scale(this.acc);
+        this.velocity = this.velocity.add(this.acceleration);
+        this.velocity = this.velocity.scale(1 - this.friction);
+        this.position = this.position.add(this.velocity);
     };
 }
