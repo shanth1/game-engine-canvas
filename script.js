@@ -9,6 +9,10 @@ game.addWorld(world1);
 const player = new Player(100, 100, 15);
 player.keyControlTopDown();
 
-world1.addObject(player);
+const circle1 = new Circle(200, 250, 40);
+const circle2 = new Circle(400, 300, 20);
+const circle3 = new Circle(500, 50, 25);
+
+world1.addObjectList([player, circle1, circle2, circle3]);
 
 game.start();

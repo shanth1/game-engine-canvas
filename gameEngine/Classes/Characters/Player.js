@@ -35,13 +35,15 @@ export class Player extends Circle {
             this.acceleration.x = 0;
         }
 
-        this.acceleration.drawVector(
-            this.context,
-            this.position.x,
-            this.position.y,
-            60,
-            "red",
-        );
+        this.acceleration
+            .getUnitVector()
+            .drawVector(
+                this.context,
+                this.position.x,
+                this.position.y,
+                60,
+                "red",
+            );
 
         this.velocity.drawVector(
             this.context,

@@ -25,7 +25,34 @@ export class World {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    update = () => {};
+    update = () => {
+        if (this._objects.length >= 2) {
+            for (let i = 0; i < this._objects.length - 1; i++) {
+                for (let j = i + 1; j < this._objects.length; j++) {
+                    if (
+                        !this._checkCollision(
+                            this._objects[i],
+                            this._objects[j],
+                        )
+                    )
+                        continue;
+
+                    console.log(i, j);
+                }
+            }
+        }
+    };
+
+    _checkCollision = (obj1, obj2) => {
+        if (
+            obj1.radius + obj2.radius >=
+            obj2.position.subtract(obj1.position).getMagnitude()
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     draw() {
         if (this._objects.length) {
