@@ -43,11 +43,20 @@ export class World {
         }
     };
 
+    _penetrationResolution = (obj1, obj2, radiusSum, distanceVector) => {
+        const penetrationDepth = radiusSum - distanceVector.getMagnitude();
+        const penetrationResolution = distanceVector
+            .getUnitVector()
+            .scale(penetrationDepth / 2);
+        obj1.position = obj1.position.add(penetrationResolution.scale(-1));
+        obj2.position = obj2.position.add(penetrationResolution);
+    };
+
     _checkCollision = (obj1, obj2) => {
-        if (
-            obj1.radius + obj2.radius >=
-            obj2.position.subtract(obj1.position).getMagnitude()
-        ) {
+        const distanceVector = obj2.position.subtract(obj1.position);
+        const radiusSum = obj1.radius + obj2.radius;
+        if (radiusSum >= distanceVector.getMagnitude()) {
+            this._penetrationResolution(obj1, obj2, radiusSum, distanceVector);
             return true;
         } else {
             return false;
