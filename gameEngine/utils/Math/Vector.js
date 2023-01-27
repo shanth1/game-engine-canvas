@@ -28,6 +28,8 @@ export class Vec2 {
         }
     };
 
+    getNormalVector = () => new Vec2(-this.y, this.x).getUnitVector();
+
     getUnitVector = () => {
         if (this.getMagnitude() === 0) {
             return new Vec2(0, 0);
