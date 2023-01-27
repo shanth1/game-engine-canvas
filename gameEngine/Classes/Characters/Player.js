@@ -14,7 +14,48 @@ export class Player extends Circle {
         this.right = false;
     }
 
-    update = () => {};
+    update = () => {
+        if (this.up) {
+            this.acceleration.y = -this.acc;
+        }
+        if (this.down) {
+            this.acceleration.y = this.acc;
+        }
+        if (this.left) {
+            this.acceleration.x = -this.acc;
+        }
+        if (this.right) {
+            this.acceleration.x = this.acc;
+        }
+
+        if (!this.up && !this.down) {
+            this.acceleration.y = 0;
+        }
+        if (!this.left && !this.right) {
+            this.acceleration.x = 0;
+        }
+
+        this.acceleration.drawVector(
+            this.context,
+            this.position.x,
+            this.position.y,
+            60,
+            "red",
+        );
+
+        this.velocity.drawVector(
+            this.context,
+            this.position.x,
+            this.position.y,
+            10,
+            "green",
+        );
+
+        this.acceleration = this.acceleration.getUnitVector().scale(this.acc);
+        this.velocity = this.velocity.add(this.acceleration);
+        this.velocity = this.velocity.scale(1 - this.friction);
+        this.position = this.position.add(this.velocity);
+    };
 
     keyControlTopDown = () => {
         document.addEventListener("keydown", (event) => {
@@ -45,48 +86,5 @@ export class Player extends Circle {
                 this.right = false;
             }
         });
-    };
-
-    move = (context) => {
-        if (this.up) {
-            this.acceleration.y = -this.acc;
-        }
-        if (this.down) {
-            this.acceleration.y = this.acc;
-        }
-        if (this.left) {
-            this.acceleration.x = -this.acc;
-        }
-        if (this.right) {
-            this.acceleration.x = this.acc;
-        }
-
-        if (!this.up && !this.down) {
-            this.acceleration.y = 0;
-        }
-        if (!this.left && !this.right) {
-            this.acceleration.x = 0;
-        }
-
-        this.acceleration.drawVector(
-            context,
-            this.position.x,
-            this.position.y,
-            60,
-            "red",
-        );
-
-        this.velocity.drawVector(
-            context,
-            this.position.x,
-            this.position.y,
-            10,
-            "green",
-        );
-
-        this.acceleration = this.acceleration.getUnitVector().scale(this.acc);
-        this.velocity = this.velocity.add(this.acceleration);
-        this.velocity = this.velocity.scale(1 - this.friction);
-        this.position = this.position.add(this.velocity);
     };
 }

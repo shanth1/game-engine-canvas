@@ -19,6 +19,7 @@ export class Game {
                 if (!this.worldList[i].visible) continue;
                 this.worldList[i].clear();
                 this.worldList[i].draw();
+                this.worldList[i].update();
             }
         }
     };

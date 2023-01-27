@@ -15,9 +15,9 @@ export class Circle {
         this._radiusY = this._maxRadius;
     }
 
-    draw = (context) => {
-        context.beginPath();
-        context.ellipse(
+    draw = () => {
+        this.context.beginPath();
+        this.context.ellipse(
             this.position.x,
             this.position.y,
             this._radiusX,
@@ -26,8 +26,8 @@ export class Circle {
             0,
             2 * Math.PI,
         );
-        context.fill();
+        this.context.fill();
     };
 
-    update = (canvas) => {};
+    update = () => {};
 }

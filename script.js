@@ -9,6 +9,6 @@ game.addWorld(world1);
 const player = new Player(100, 100, 15);
 player.keyControlTopDown();
 
-world1.addPlayer(player);
+world1.addObject(player);
 
 game.start();
