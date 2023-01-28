@@ -17,12 +17,6 @@ export class World {
         this._objects.push(...objectList);
     }
 
-    addArrayOfObjectList(arrays) {
-        arrays.map((objectList) => {
-            this._objects.push(...objectList);
-        });
-    }
-
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
