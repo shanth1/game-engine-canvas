@@ -1,9 +1,8 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
 
 export class Circle {
-    constructor(x, y, radius, friction = 0, elasticity = 0) {
+    constructor(x, y, radius, elasticity = 0) {
         this.radius = radius;
-        this.friction = friction;
 
         this.position = new Vec2(x, y);
         this.velocity = new Vec2(0, 0);
@@ -13,6 +12,8 @@ export class Circle {
         this._maxRadius = radius;
         this._radiusX = this._maxRadius;
         this._radiusY = this._maxRadius;
+
+        this.visibleVectors = true;
     }
 
     draw = () => {
@@ -27,7 +28,32 @@ export class Circle {
             2 * Math.PI,
         );
         this.context.fill();
+        this._drawVectors();
     };
 
-    update = () => {};
+    _drawVectors() {
+        if (!this.visibleVectors) return;
+        this.acceleration
+            .getUnitVector()
+            .drawVector(
+                this.context,
+                this.position.x,
+                this.position.y,
+                60,
+                "red",
+            );
+        this.velocity.drawVector(
+            this.context,
+            this.position.x,
+            this.position.y,
+            10,
+            "green",
+        );
+    }
+
+    update() {
+        this.velocity = this.velocity.add(this.acceleration);
+        this.velocity = this.velocity.scale(1 - this.friction);
+        this.position = this.position.add(this.velocity);
+    }
 }

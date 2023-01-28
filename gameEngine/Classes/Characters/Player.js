@@ -2,11 +2,9 @@ import { Vec2 } from "../../utils/Math/Vector.js";
 import { Circle } from "../Figures/Circle.js";
 
 export class Player extends Circle {
-    constructor(x, y, radius, acceleration = 1) {
+    constructor(x, y, radius, accelerationScalar = 1) {
         super(x, y, radius);
-
-        this.friction = 0.1;
-        this.acc = acceleration;
+        this.accelerationScalar = accelerationScalar;
 
         this.up = false;
         this.down = false;
@@ -14,18 +12,26 @@ export class Player extends Circle {
         this.right = false;
     }
 
-    update = () => {
+    update() {
+        this.acceleration = this.acceleration
+            .getUnitVector()
+            .scale(this.accelerationScalar);
+        super.update();
+        this._moving();
+    }
+
+    _moving() {
         if (this.up) {
-            this.acceleration.y = -this.acc;
+            this.acceleration.y = -this.accelerationScalar;
         }
         if (this.down) {
-            this.acceleration.y = this.acc;
+            this.acceleration.y = this.accelerationScalar;
         }
         if (this.left) {
-            this.acceleration.x = -this.acc;
+            this.acceleration.x = -this.accelerationScalar;
         }
         if (this.right) {
-            this.acceleration.x = this.acc;
+            this.acceleration.x = this.accelerationScalar;
         }
 
         if (!this.up && !this.down) {
@@ -34,30 +40,7 @@ export class Player extends Circle {
         if (!this.left && !this.right) {
             this.acceleration.x = 0;
         }
-
-        this.acceleration
-            .getUnitVector()
-            .drawVector(
-                this.context,
-                this.position.x,
-                this.position.y,
-                60,
-                "red",
-            );
-
-        this.velocity.drawVector(
-            this.context,
-            this.position.x,
-            this.position.y,
-            10,
-            "green",
-        );
-
-        this.acceleration = this.acceleration.getUnitVector().scale(this.acc);
-        this.velocity = this.velocity.add(this.acceleration);
-        this.velocity = this.velocity.scale(1 - this.friction);
-        this.position = this.position.add(this.velocity);
-    };
+    }
 
     keyControlTopDown = () => {
         document.addEventListener("keydown", (event) => {
