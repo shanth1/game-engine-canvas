@@ -1,7 +1,6 @@
-import { Vec2 } from "../../utils/Math/Vector.js";
-import { Circle } from "../Figures/Circle.js";
+import { Sphere } from "../Figures/Sphere.js";
 
-export class Player extends Circle {
+export class Player extends Sphere {
     constructor(x, y, radius, accelerationScalar = 1) {
         super(x, y, radius);
         this.accelerationScalar = accelerationScalar;

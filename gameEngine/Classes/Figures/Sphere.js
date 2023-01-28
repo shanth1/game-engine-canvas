@@ -1,6 +1,6 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
 
-export class Circle {
+export class Sphere {
     constructor(x, y, radius, elasticity = 0) {
         this.radius = radius;
 
