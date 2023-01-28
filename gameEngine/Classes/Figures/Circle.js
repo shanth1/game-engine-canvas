@@ -52,6 +52,20 @@ export class Circle {
     }
 
     update() {
+        if (
+            this.position.y + this.radius > this.canvas.height ||
+            this.position.y - this.radius < 0
+        ) {
+            this.velocity.y = -this.velocity.y;
+        }
+
+        if (
+            this.position.x + this.radius > this.canvas.width ||
+            this.position.x - this.radius < 0
+        ) {
+            this.velocity.x = -this.velocity.x;
+        }
+
         this.velocity = this.velocity.add(this.acceleration);
         this.velocity = this.velocity.scale(1 - this.friction);
         this.position = this.position.add(this.velocity);
