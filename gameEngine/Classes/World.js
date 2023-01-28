@@ -9,11 +9,20 @@ export class World {
 
     addLight = () => {};
 
+    _initObject(object) {
+        object.gravity = this.gravity;
+        object.canvas = this.canvas;
+        object.context = this.context;
+        object.friction = this.friction;
+    }
+
     addObject(object) {
+        this._initObject(object);
         this._objects.push(object);
     }
 
     addObjectList(objectList) {
+        objectList.forEach((object) => this._initObject(object));
         this._objects.push(...objectList);
     }
 
@@ -74,10 +83,6 @@ export class World {
     draw() {
         if (this._objects.length) {
             this._objects.forEach((object) => {
-                object.gravity = this.gravity;
-                object.canvas = this.canvas;
-                object.context = this.context;
-                object.friction = this.friction;
                 object.draw();
                 object.update();
             });
