@@ -1,8 +1,8 @@
 import { Sphere } from "../Figures/Sphere.js";
 
 export class Player extends Sphere {
-    constructor(x, y, radius, accelerationScalar = 1) {
-        super(x, y, radius);
+    constructor(x, y, radius, friction, accelerationScalar = 1) {
+        super(x, y, radius, friction);
         this.accelerationScalar = accelerationScalar;
 
         this.up = false;

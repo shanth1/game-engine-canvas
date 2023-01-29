@@ -1,4 +1,3 @@
-import engine from "./gameEngine/engine.js";
 import { Game, World, Player, Sphere, random } from "./gameEngine/engine.js";
 
 const game = new Game("game_engine", 600, 400);
@@ -6,7 +5,7 @@ const game = new Game("game_engine", 600, 400);
 const world1 = new World(1, true, 0.01);
 game.addWorld(world1);
 
-const player = new Player(100, 100, 15);
+const player = new Player(100, 100, 15, 0.1);
 player.keyControlTopDown();
 
 const circle1 = new Sphere(200, 250, 40);

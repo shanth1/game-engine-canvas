@@ -13,7 +13,9 @@ export class World {
         object.gravity = this.gravity;
         object.canvas = this.canvas;
         object.context = this.context;
-        object.friction = this.friction;
+        if (object.friction === undefined) {
+            object.friction = this.friction;
+        }
     }
 
     addObject(object) {

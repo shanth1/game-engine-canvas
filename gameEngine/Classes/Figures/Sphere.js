@@ -1,8 +1,9 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
 
 export class Sphere {
-    constructor(x, y, radius, elasticity = 0) {
+    constructor(x, y, radius, friction, elasticity = 0) {
         this.radius = radius;
+        this.friction = friction;
 
         this.position = new Vec2(x, y);
         this.velocity = new Vec2(0, 0);
