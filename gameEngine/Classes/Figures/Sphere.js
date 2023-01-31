@@ -52,21 +52,27 @@ export class Sphere {
         );
     }
 
-    update() {
-        if (
-            this.position.y + this.radius > this.canvas.height ||
-            this.position.y - this.radius < 0
-        ) {
+    _resolveBorderCollision() {
+        if (this.position.y + this.radius > this.canvas.height) {
+            this.position.y = this.canvas.height - this.radius;
             this.velocity.y = -this.velocity.y;
         }
-
-        if (
-            this.position.x + this.radius > this.canvas.width ||
-            this.position.x - this.radius < 0
-        ) {
+        if (this.position.y - this.radius < 0) {
+            this.position.y = this.radius;
+            this.velocity.y = -this.velocity.y;
+        }
+        if (this.position.x + this.radius > this.canvas.width) {
+            this.position.x = this.canvas.width - this.radius;
             this.velocity.x = -this.velocity.x;
         }
+        if (this.position.x - this.radius < 0) {
+            this.position.x = this.radius;
+            this.velocity.x = -this.velocity.x;
+        }
+    }
 
+    update() {
+        this._resolveBorderCollision();
         this.velocity = this.velocity.add(this.acceleration);
         this.velocity = this.velocity.scale(1 - this.friction);
         this.position = this.position.add(this.velocity);
