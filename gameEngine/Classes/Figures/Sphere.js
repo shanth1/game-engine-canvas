@@ -19,6 +19,7 @@ export class Sphere {
 
     draw = () => {
         this.context.beginPath();
+        this.context.fillStyle = "black";
         this.context.ellipse(
             this.position.x,
             this.position.y,
