@@ -1,10 +1,12 @@
+import { Vec2 } from "../utils/Math/Vector.js";
+
 export class World {
-    constructor(gravity = 0, visible = true, friction = 0.1) {
+    constructor(gravity = new Vec2(0, 0), visible = true) {
         this.gravity = gravity;
         this.visible = visible;
-        this.friction = friction;
 
         this._objects = [];
+        this._surfaces = [];
     }
 
     addLight = () => {};
@@ -13,14 +15,27 @@ export class World {
         object.gravity = this.gravity;
         object.canvas = this.canvas;
         object.context = this.context;
-        if (object.friction === undefined) {
-            object.friction = this.friction;
-        }
     }
 
     addObject(object) {
         this._initObject(object);
         this._objects.push(object);
+    }
+
+    addSurface(figure2d) {
+        if (!this._surfaces.length) {
+            this._surfaces.push(figure2d);
+        } else {
+            for (let i = 0; i < this._surfaces.length; i++) {
+                if (figure2d.roughness > this._surfaces[i].roughness) {
+                    this._surfaces.splice(i, 0, figure2d);
+                    break;
+                } else {
+                    this._surfaces.push(figure2d);
+                    break;
+                }
+            }
+        }
     }
 
     addObjectList(objectList) {
