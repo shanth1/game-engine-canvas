@@ -15,6 +15,8 @@ export class World {
         object.gravity = this.gravity;
         object.canvas = this.canvas;
         object.context = this.context;
+
+        object.friction = 0.05;
     }
 
     addObject(object) {
@@ -23,19 +25,8 @@ export class World {
     }
 
     addSurface(figure2d) {
-        if (!this._surfaces.length) {
-            this._surfaces.push(figure2d);
-        } else {
-            for (let i = 0; i < this._surfaces.length; i++) {
-                if (figure2d.roughness > this._surfaces[i].roughness) {
-                    this._surfaces.splice(i, 0, figure2d);
-                    break;
-                } else {
-                    this._surfaces.push(figure2d);
-                    break;
-                }
-            }
-        }
+        this._initObject(figure2d);
+        this._surfaces.push(figure2d);
     }
 
     addObjectList(objectList) {
@@ -73,35 +64,42 @@ export class World {
         obj2.velocity = obj2.velocity.add(separatingVelocityVector.scale(-1));
     };
 
+    _changeFrictionCoefficient() {}
+
+    _updateCoupleOfObjects() {}
+
     update = () => {
-        if (this._objects.length >= 2) {
-            for (let i = 0; i < this._objects.length - 1; i++) {
-                for (let j = i + 1; j < this._objects.length; j++) {
-                    const obj1 = this._objects[i];
-                    const obj2 = this._objects[j];
-                    const radiusSum = obj1.radius + obj2.radius;
-                    const distanceVector = obj2.position.subtract(
-                        obj1.position,
-                    );
-                    if (!this._checkCollision(radiusSum, distanceVector))
-                        continue;
-                    this._penetrationResolution(
-                        obj1,
-                        obj2,
-                        radiusSum,
-                        distanceVector,
-                    );
-                    this._resolveCollision(obj1, obj2);
-                }
+        for (let i = 0; i < this._objects.length; i++) {
+            this._objects[i]._getSurfaceRoughness(this._surfaces);
+            this._objects[i].update();
+            if (i === this._objects.length - 1) break;
+
+            for (let j = i + 1; j < this._objects.length; j++) {
+                const obj1 = this._objects[i];
+                const obj2 = this._objects[j];
+                const radiusSum = obj1.radius + obj2.radius;
+                const distanceVector = obj2.position.subtract(obj1.position);
+                if (!this._checkCollision(radiusSum, distanceVector)) continue;
+                this._penetrationResolution(
+                    obj1,
+                    obj2,
+                    radiusSum,
+                    distanceVector,
+                );
+                this._resolveCollision(obj1, obj2);
             }
         }
     };
 
     draw() {
+        if (this._surfaces.length) {
+            this._surfaces.forEach((surface) => {
+                surface.draw();
+            });
+        }
         if (this._objects.length) {
             this._objects.forEach((object) => {
                 object.draw();
-                object.update();
             });
         }
     }

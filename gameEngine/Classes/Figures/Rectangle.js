@@ -1,8 +1,9 @@
+import { Vec2 } from "../../utils/Math/Vector.js";
+
 export class Rectangle {
     constructor(x, y, width, height, color, roughness = 0.5) {
         this.type = "rectangle";
-        this.x = x;
-        this.y = y;
+        this.position = new Vec2(x, y);
         this.width = width;
         this.height = height;
         this.color = color;
@@ -12,7 +13,12 @@ export class Rectangle {
     }
 
     draw() {
-        c.fillStyle = this.color;
-        c.fillRect(this.x, this.y, this.width, this.height);
+        this.context.fillStyle = this.color;
+        this.context.fillRect(
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height,
+        );
     }
 }
