@@ -4,7 +4,7 @@ export class Player extends Sphere {
     constructor(x, y, radius, friction, accelerationScalar = 1) {
         super(x, y, radius, friction);
         this.accelerationScalar = accelerationScalar;
-
+        this.type = "player";
         this.up = false;
         this.down = false;
         this.left = false;
@@ -18,6 +18,8 @@ export class Player extends Sphere {
         super.update();
         this._moving();
     }
+
+    _getSurfaceRoughness() {}
 
     _moving() {
         if (this.up) {
