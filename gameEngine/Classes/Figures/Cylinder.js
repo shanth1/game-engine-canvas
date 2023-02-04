@@ -22,7 +22,46 @@ export class Cylinder {
         this.visibleVectors = false;
     }
 
-    _checkRectangleCollision(rectangle) {
+    _detectCollisionWithRectangle(rectangle) {
+        //* Closest point of rectangle for a circle
+        const closestPointOfRectangle = new Vec2(
+            this.position.x,
+            this.position.y,
+        );
+
+        const clamp = (min, max, val) => {
+            if (val < min) {
+                return min;
+            } else if (val > max) {
+                return max;
+            } else {
+                return val;
+            }
+        };
+
+        closestPointOfRectangle.x = clamp(
+            rectangle.position.x,
+            rectangle.position.x + rectangle.width,
+            this.position.x,
+        );
+        closestPointOfRectangle.y = clamp(
+            rectangle.position.y,
+            rectangle.position.y + rectangle.height,
+            this.position.y,
+        );
+
+        const distance = this.position
+            .subtract(closestPointOfRectangle)
+            .getMagnitude();
+
+        if (distance < this.radius) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    _getTypeOfRectangleCollision(rectangle) {
         if (
             this.position.x - this.radius > rectangle.position.x &&
             this.position.x + this.radius <
@@ -32,14 +71,7 @@ export class Cylinder {
                 rectangle.position.y + rectangle.height
         ) {
             return "entirely";
-        } else if (
-            this.position.x + this.radius > rectangle.position.x &&
-            this.position.x - this.radius <
-                rectangle.position.x + rectangle.width &&
-            this.position.y + this.radius > rectangle.position.y &&
-            this.position.y - this.radius <
-                rectangle.position.y + rectangle.height
-        ) {
+        } else if (this._detectCollisionWithRectangle(rectangle)) {
             return "partially";
         } else {
             return false;
@@ -47,12 +79,11 @@ export class Cylinder {
     }
 
     _getSurfaceRoughness(surfaceList) {
-        console.log(this.surfaceRoughness);
         this.otherCollision = false;
         for (let i = surfaceList.length - 1; i >= 0; i--) {
             switch (surfaceList[i].type) {
                 case "rectangle":
-                    const collision = this._checkRectangleCollision(
+                    const collision = this._getTypeOfRectangleCollision(
                         surfaceList[i],
                     );
                     if (collision === "partially") {

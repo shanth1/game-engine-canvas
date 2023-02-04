@@ -15,7 +15,7 @@ const surf1 = new Rectangle(
     "green",
     0.01,
 );
-const surf2 = new Rectangle(10, 50, 250, 300, "blue", 0.8);
+const surf2 = new Rectangle(13, 120, 165, 300, "blue", 0.8);
 // const surf3 = new Rectangle(100, 100, 200, 300, "red", 0.1);
 
 world1.addSurface(surf1);
