@@ -1,4 +1,4 @@
-export class Game {
+export class Window {
     constructor(id, width = window.innerWidth, height = window.innerHeight) {
         this.canvas = document.getElementById(id);
         this.canvas.width = width;

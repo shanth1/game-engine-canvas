@@ -1,8 +1,11 @@
-import { Game } from "./Classes/Game.js";
-import { Sphere } from "./Classes/Figures/Sphere.js";
+import { Window } from "./Classes/Window.js";
 import { Player } from "./Classes/Characters/Player.js";
-import { World } from "./Classes/World.js";
+import { Layer } from "./Classes/Layer.js";
 import * as random from "./utils/random.js";
+import { SphereObject } from "./Classes/Objects/SphereObject.js";
+import { CylinderObject } from "./Classes/Objects/CylinderObject.js";
+import { CubeObject } from "./Classes/Objects/CubeObject.js";
+import { RectangleSurface } from "./Classes/Surfaces/RectangleSurface.js";
 
 const engine = {
     // Game: Game,
@@ -16,6 +19,14 @@ const engine = {
     // math: {},
     // random: random,
 };
-
 export default engine;
-export { Game, Sphere, Player, World, random };
+export {
+    Window,
+    RectangleSurface,
+    SphereObject,
+    CubeObject,
+    CylinderObject,
+    Player,
+    Layer,
+    random,
+};

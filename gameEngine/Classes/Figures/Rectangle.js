@@ -1,24 +1,26 @@
-import { Vec2 } from "../../utils/Math/Vector.js";
+import { Figure } from "./_Figure.js";
 
-export class Rectangle {
-    constructor(x, y, width, height, color, roughness = 0.5) {
+export class Rectangle extends Figure {
+    constructor(
+        position = new Vec2(0, 0),
+        width = 0,
+        height = 0,
+        color = "black",
+    ) {
+        super(position, color);
         this.type = "rectangle";
-        this.position = new Vec2(x, y);
         this.width = width;
         this.height = height;
-        this.color = color;
-        Math.abs(roughness) > 1
-            ? (this.roughness = 1)
-            : (this.roughness = Math.abs(roughness));
     }
 
     draw() {
-        this.context.fillStyle = this.color;
-        this.context.fillRect(
-            this.position.x,
-            this.position.y,
-            this.width,
-            this.height,
-        );
+        super.draw(() => {
+            this.context.fillRect(
+                this.position.x,
+                this.position.y,
+                this.width,
+                this.height,
+            );
+        });
     }
 }

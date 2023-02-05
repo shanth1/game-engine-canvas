@@ -1,25 +1,28 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
+import { Square } from "../Figures/Square.js";
+import { objectMixins } from "./_objectMixins.js";
 
-export class Cylinder {
-    constructor(x, y, radius, color, mass = 1, roughness = 0.2) {
-        this.type = "cylinder";
-        this.radius = radius;
+export class CubeObject extends Square {
+    constructor(
+        position = new Vec2(0, 0),
+        width = 0,
+        color = "black",
+        roughness = 0,
+        mass = 1,
+    ) {
+        super(position, width, color);
+        this.type = "cube";
 
-        this.position = new Vec2(x, y);
+        this.roughness = roughness;
+        this.mass = mass;
         this.velocity = new Vec2(0, 0);
         this.acceleration = new Vec2(0, 0);
+        this.visibleVectors = false;
+
+        this.surfaceList = [];
 
         this.gravityAcceleration = undefined;
         this.surfaceRoughness = 0;
-
-        this.color = color;
-        Math.abs(roughness) > 1
-            ? (this.roughness = 1)
-            : (this.roughness = Math.abs(roughness));
-
-        this.mass = Math.abs(mass);
-
-        this.visibleVectors = false;
     }
 
     _detectCollisionWithRectangle(rectangle) {
@@ -108,42 +111,9 @@ export class Cylinder {
                         this.otherCollision = false;
                         this.surfaceRoughness = 0;
                     }
+                    break;
             }
         }
-    }
-
-    draw = () => {
-        this.context.beginPath();
-        this.context.fillStyle = this.color;
-        this.context.arc(
-            this.position.x,
-            this.position.y,
-            this.radius,
-            0,
-            2 * Math.PI,
-        );
-        this.context.fill();
-        this._drawVectors();
-    };
-
-    _drawVectors() {
-        if (!this.visibleVectors) return;
-        this.acceleration
-            .getUnitVector()
-            .drawVector(
-                this.context,
-                this.position.x,
-                this.position.y,
-                60,
-                "red",
-            );
-        this.velocity.drawVector(
-            this.context,
-            this.position.x,
-            this.position.y,
-            10,
-            "green",
-        );
     }
 
     _resolveBorderCollision() {
@@ -166,12 +136,12 @@ export class Cylinder {
     }
 
     update() {
-        // debugger;
         this._resolveBorderCollision();
 
+        this._getSurfaceRoughness(this.surfaceList);
         this.velocity = this.velocity.add(this.acceleration);
 
-        if (this.surfaceRoughness !== undefined) {
+        if (this.surfaceRoughness !== 0) {
             this.frictionCoefficient =
                 (this.surfaceRoughness + this.roughness) / 2;
             this.friction = this.frictionCoefficient;
@@ -180,3 +150,4 @@ export class Cylinder {
         this.position = this.position.add(this.velocity);
     }
 }
+Object.assign(CubeObject.prototype, objectMixins);

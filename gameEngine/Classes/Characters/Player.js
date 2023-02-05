@@ -1,9 +1,16 @@
-import { Sphere } from "../Figures/Sphere.js";
+import { Vec2 } from "../../utils/Math/Vector.js";
+import { CubeObject } from "../Objects/CubeObject.js";
 
-export class Player extends Sphere {
-    constructor(x, y, radius, friction, accelerationScalar = 1) {
-        super(x, y, radius, friction);
-        this.accelerationScalar = accelerationScalar;
+export class Player extends CubeObject {
+    constructor(
+        position = new Vec2(),
+        width = 0,
+        color = "black",
+        roughness = 0,
+        mass = 1,
+    ) {
+        super(position, width, color, roughness, mass);
+        this.accelerationScalar = 1;
         this.type = "player";
         this.up = false;
         this.down = false;

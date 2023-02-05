@@ -1,6 +1,4 @@
-import { Vec2 } from "../utils/Math/Vector.js";
-
-export class World {
+export class Layer {
     constructor(gravity = new Vec2(0, 0), visible = true) {
         this.gravity = gravity;
         this.visible = visible;
@@ -70,7 +68,7 @@ export class World {
 
     update = () => {
         for (let i = 0; i < this._objects.length; i++) {
-            this._objects[i]._getSurfaceRoughness(this._surfaces);
+            this._objects[i].surfaceList = this._surfaces;
             this._objects[i].update();
             if (i === this._objects.length - 1) break;
 
