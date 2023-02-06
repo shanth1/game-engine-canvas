@@ -14,11 +14,5 @@ export class SphereObject extends _Object {
         this.type = "sphere";
         this.radius = radius;
     }
-
-    update() {
-        this.velocity = this.velocity.add(this.acceleration);
-        this.velocity = this.velocity.scale(1 - this.friction);
-        this.position = this.position.add(this.velocity);
-    }
 }
 Object.assign(SphereObject.prototype, drawCircleMixin);

@@ -1,7 +1,8 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
+import { CylinderObject } from "../Objects/CylinderObject.js";
 import { SphereObject } from "../Objects/SphereObject.js";
 
-export class Player extends SphereObject {
+export class Player extends CylinderObject {
     constructor(
         position = new Vec2(0, 0),
         radius = 0,
@@ -25,9 +26,6 @@ export class Player extends SphereObject {
         super.update();
         this._moving();
     }
-
-    _getSurfaceRoughness() {}
-
     _moving() {
         if (this.up) {
             this.acceleration.y = -this.accelerationScalar;

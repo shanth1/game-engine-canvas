@@ -16,11 +16,5 @@ export class CuboidObject extends _Object {
         this.width = width;
         this.height = height;
     }
-
-    update() {
-        this.velocity = this.velocity.add(this.acceleration);
-        this.velocity = this.velocity.scale(1 - this.friction);
-        this.position = this.position.add(this.velocity);
-    }
 }
 Object.assign(CuboidObject.prototype, drawRectangleMixin);
