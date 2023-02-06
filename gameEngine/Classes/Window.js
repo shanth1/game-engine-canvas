@@ -1,25 +1,29 @@
 export class Window {
-    constructor(id, width = window.innerWidth, height = window.innerHeight) {
+    constructor(
+        id = "",
+        width = window.innerWidth,
+        height = window.innerHeight,
+    ) {
         this.canvas = document.getElementById(id);
         this.canvas.width = width;
         this.canvas.height = height;
-        this.worldList = [];
+        this.layerList = [];
     }
 
-    addWorld = (worldObj) => {
-        worldObj.canvas = this.canvas;
-        worldObj.context = this.canvas.getContext("2d");
-        this.worldList.push(worldObj);
+    addWorld = (layerObject) => {
+        layerObject.canvas = this.canvas;
+        layerObject.context = this.canvas.getContext("2d");
+        this.layerList.push(layerObject);
     };
 
     _animate = () => {
-        if (this.worldList.length) {
+        if (this.layerList.length) {
             requestAnimationFrame(this._animate);
-            for (let i = 0; i < this.worldList.length; i++) {
-                if (!this.worldList[i].visible) continue;
-                this.worldList[i].clear();
-                this.worldList[i].draw();
-                this.worldList[i].update();
+            for (let index = 0; index < this.layerList.length; index++) {
+                if (!this.layerList[index].visible) continue;
+                this.layerList[index].clear();
+                this.layerList[index].draw();
+                this.layerList[index].update();
             }
         }
     };
