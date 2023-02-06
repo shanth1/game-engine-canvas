@@ -39,7 +39,7 @@ player.keyControlTopDown();
 // const circle2 = new SphereObject(400, 300, 20);
 // const circle3 = new SphereObject(500, 50, 25);
 
-const cyl1 = new CylinderObject(new Vec2(300, 400), 20, "green", 0.5, 1);
+const cyl1 = new CylinderObject(new Vec2(300, 200), 20, "red", 0.5, 1);
 
 layer1.addObjectList([cyl1, player]);
 

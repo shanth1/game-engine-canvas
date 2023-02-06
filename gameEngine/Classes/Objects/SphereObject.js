@@ -46,4 +46,4 @@ export class SphereObject extends Circle {
         this.position = this.position.add(this.velocity);
     }
 }
-Object.assign(SphereObject.prototype, objectMixins);
+// Object.assign(SphereObject.prototype, objectMixins);

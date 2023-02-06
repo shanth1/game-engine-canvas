@@ -1,15 +1,15 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { CubeObject } from "../Objects/CubeObject.js";
+import { SphereObject } from "../Objects/SphereObject.js";
 
-export class Player extends CubeObject {
+export class Player extends SphereObject {
     constructor(
-        position = new Vec2(),
-        width = 0,
+        position = new Vec2(0, 0),
+        radius = 0,
         color = "black",
         roughness = 0,
         mass = 1,
     ) {
-        super(position, width, color, roughness, mass);
+        super(position, radius, color, roughness, mass);
         this.accelerationScalar = 1;
         this.type = "player";
         this.up = false;

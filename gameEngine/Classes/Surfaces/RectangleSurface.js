@@ -8,7 +8,10 @@ export class RectangleSurface extends Rectangle {
         width = 0,
         height = 0,
         color = "black",
+        roughness = 0.1,
     ) {
         super(position, width, height, color);
+        this.type = "rectangle";
+        this.roughness = roughness;
     }
 }
