@@ -12,7 +12,7 @@ export class Player extends CylinderObject {
     ) {
         super(position, radius, color, roughness, mass);
         this.accelerationScalar = 1;
-        this.type = "player";
+        this.type = "cylinder";
         this.up = false;
         this.down = false;
         this.left = false;

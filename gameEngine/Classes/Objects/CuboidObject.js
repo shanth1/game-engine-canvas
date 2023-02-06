@@ -17,4 +17,5 @@ export class CuboidObject extends _Object {
         this.height = height;
     }
 }
+
 Object.assign(CuboidObject.prototype, drawRectangleMixin);

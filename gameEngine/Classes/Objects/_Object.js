@@ -37,6 +37,27 @@ export class _Object extends _Figure {
         );
     }
 
+    checkCollisionWithObject(object) {
+        switch (object.type) {
+            case "cuboid":
+                return this.checkCollisionWithRectangleObject(object);
+            case "cylinder":
+            case "sphere":
+                return this.checkCollisionWithCircleObject(object);
+        }
+    }
+    resolveCollisionWithObject(object) {
+        switch (object.type) {
+            case "cuboid":
+                this.resolveCollisionWithRectangleObject(object);
+                break;
+            case "cylinder":
+            case "sphere":
+                this.resolveCollisionWithCircleObject(object);
+                break;
+        }
+    }
+
     _getTypeOfRectangleCollision(rectangle) {
         if (
             this.position.x - this.radius > rectangle.position.x &&
