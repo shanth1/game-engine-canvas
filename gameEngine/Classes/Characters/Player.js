@@ -1,6 +1,5 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
 import { CylinderObject } from "../Objects/CylinderObject.js";
-import { SphereObject } from "../Objects/SphereObject.js";
 
 export class Player extends CylinderObject {
     constructor(
@@ -12,7 +11,6 @@ export class Player extends CylinderObject {
     ) {
         super(position, radius, color, roughness, mass);
         this.accelerationScalar = 1;
-        this.type = "cylinder";
         this.up = false;
         this.down = false;
         this.left = false;
