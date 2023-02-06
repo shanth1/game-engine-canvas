@@ -1,9 +1,7 @@
 import {
     Window,
     Player,
-    SphereObject,
     RectangleSurface,
-    CubeObject,
     CylinderObject,
     Layer,
 } from "./gameEngine/engine.js";

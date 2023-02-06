@@ -4,7 +4,6 @@ import { Layer } from "./Classes/Layer.js";
 import * as random from "./utils/random.js";
 import { SphereObject } from "./Classes/Objects/SphereObject.js";
 import { CylinderObject } from "./Classes/Objects/CylinderObject.js";
-import { CubeObject } from "./Classes/Objects/CubeObject.js";
 import { RectangleSurface } from "./Classes/Surfaces/RectangleSurface.js";
 
 const engine = {
@@ -24,7 +23,6 @@ export {
     Window,
     RectangleSurface,
     SphereObject,
-    CubeObject,
     CylinderObject,
     Player,
     Layer,
