@@ -1,8 +1,8 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { Circle } from "../Figures/Circle.js";
-import { objectMixins } from "./_objectMixins.js";
+import { drawCircleMixin } from "../Figures/_drawCircleMixin.js";
+import { _Object } from "./_Object.js";
 
-export class SphereObject extends Circle {
+export class SphereObject extends _Object {
     constructor(
         position = new Vec2(0, 0),
         radius = 0,
@@ -10,14 +10,9 @@ export class SphereObject extends Circle {
         roughness = 0,
         mass = 1,
     ) {
-        super(position, radius, color);
+        super(position, color, roughness, mass);
         this.type = "sphere";
-
-        this.roughness = roughness;
-        this.mass = mass;
-        this.velocity = new Vec2(0, 0);
-        this.acceleration = new Vec2(0, 0);
-        this.visibleVectors = false;
+        this.radius = radius;
     }
 
     update() {
@@ -26,4 +21,4 @@ export class SphereObject extends Circle {
         this.position = this.position.add(this.velocity);
     }
 }
-// Object.assign(SphereObject.prototype, objectMixins);
+Object.assign(SphereObject.prototype, drawCircleMixin);

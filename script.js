@@ -30,7 +30,7 @@ const surf2 = new RectangleSurface(
 layer1.addSurface(surf1);
 layer1.addSurface(surf2);
 
-const player = new Player(new Vec2(100, 100), 20, "red", 0.5, 1);
+const player = new Player(new Vec2(100, 100), 20, "red", 0.2, 1);
 player.keyControlTopDown();
 
 // const circle1 = new SphereObject(200, 250, 40);

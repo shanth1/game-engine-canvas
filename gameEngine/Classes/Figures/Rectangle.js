@@ -1,6 +1,7 @@
-import { Figure } from "./_Figure.js";
+import { _Figure } from "./_Figure.js";
+import { drawRectangleMixin } from "./_drawRectangleMixin.js";
 
-export class Rectangle extends Figure {
+export class Rectangle extends _Figure {
     constructor(
         position = new Vec2(0, 0),
         width = 0,
@@ -12,15 +13,5 @@ export class Rectangle extends Figure {
         this.width = width;
         this.height = height;
     }
-
-    draw() {
-        super.draw(() => {
-            this.context.fillRect(
-                this.position.x,
-                this.position.y,
-                this.width,
-                this.height,
-            );
-        });
-    }
 }
+Object.assign(Rectangle.prototype, drawRectangleMixin);

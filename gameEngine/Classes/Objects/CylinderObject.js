@@ -1,8 +1,8 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { Circle } from "../Figures/Circle.js";
-import { objectMixins } from "./_objectMixins.js";
+import { drawCircleMixin } from "../Figures/_drawCircleMixin.js";
+import { _Object } from "./_Object.js";
 
-export class CylinderObject extends Circle {
+export class CylinderObject extends _Object {
     constructor(
         position = new Vec2(0, 0),
         radius = 0,
@@ -10,14 +10,9 @@ export class CylinderObject extends Circle {
         roughness = 0,
         mass = 1,
     ) {
-        super(position, radius, color, mass, roughness);
+        super(position, color, roughness, mass);
         this.type = "cylinder";
-
-        this.roughness = roughness;
-        this.mass = mass;
-        this.velocity = new Vec2(0, 0);
-        this.acceleration = new Vec2(0, 0);
-        this.visibleVectors = false;
+        this.radius = radius;
 
         this.surfaceList = [];
         this.surfaceRoughness = 0;
@@ -128,5 +123,4 @@ export class CylinderObject extends Circle {
         this.position = this.position.add(this.velocity);
     }
 }
-
-// Object.assign(CylinderObject.prototype, objectMixins);
+Object.assign(CylinderObject.prototype, drawCircleMixin);

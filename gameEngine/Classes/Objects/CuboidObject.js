@@ -1,8 +1,8 @@
+import { _Object } from "./_Object.js";
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { Rectangle } from "../Figures/Rectangle.js";
-import { objectMixins } from "./_objectMixins.js";
+import { drawRectangleMixin } from "../Figures/_drawRectangleMixin.js";
 
-export class CuboidObject extends Rectangle {
+export class CuboidObject extends _Object {
     constructor(
         position = new Vec2(0, 0),
         width = 0,
@@ -11,21 +11,16 @@ export class CuboidObject extends Rectangle {
         roughness = 0,
         mass = 0,
     ) {
-        super(position, width, height, color);
+        super(position, color, roughness, mass);
         this.type = "cuboid";
-
-        this.roughness = roughness;
-        this.mass = mass;
-        this.velocity = new Vec2(0, 0);
-        this.acceleration = new Vec2(0, 0);
-        this.visibleVectors = false;
+        this.width = width;
+        this.height = height;
     }
 
     update() {
-        // this._resolveBorderCollision();
         this.velocity = this.velocity.add(this.acceleration);
         this.velocity = this.velocity.scale(1 - this.friction);
         this.position = this.position.add(this.velocity);
     }
 }
-// Object.assign(CuboidObject.prototype, objectMixins);
+Object.assign(CuboidObject.prototype, drawRectangleMixin);

@@ -1,7 +1,21 @@
-export const objectMixins = {
-    setSurfaceRoughness() {
-        this.surfaceRoughness = 0;
-    },
+import { Vec2 } from "../../utils/Math/Vector.js";
+import { _Figure } from "../Figures/_Figure.js";
+
+export class _Object extends _Figure {
+    constructor(
+        position = new Vec2(0, 0),
+        color = "black",
+        roughness = 0,
+        mass = 1,
+    ) {
+        super(position, color);
+        this.roughness = roughness;
+        this.mass = mass;
+
+        this.velocity = new Vec2(0, 0);
+        this.acceleration = new Vec2(0, 0);
+        this.visibleVectors = false;
+    }
 
     _drawVectors() {
         if (!this.visibleVectors) return;
@@ -21,7 +35,7 @@ export const objectMixins = {
             10,
             "green",
         );
-    },
+    }
 
     update() {
         this.velocity = this.velocity.add(this.acceleration);
@@ -32,5 +46,5 @@ export const objectMixins = {
             this.velocity = this.velocity.scale(1 - this.friction);
         }
         this.position = this.position.add(this.velocity);
-    },
-};
+    }
+}
