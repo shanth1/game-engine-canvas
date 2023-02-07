@@ -1,4 +1,19 @@
-export const roundObjectMixin = {
+import { Vec2 } from "../../utils/Math/Vector.js";
+import { drawCircleMixin } from "../Figures/_drawCircleMixin.js";
+import { _Object } from "./_Object.js";
+
+export class RoundObject extends _Object {
+    constructor(
+        position = new Vec2(0, 0),
+        radius = 0,
+        color = "black",
+        roughness = 0,
+        mass = 1,
+    ) {
+        super(position, color, roughness, mass);
+        this.radius = radius;
+    }
+
     _penetrationResolutionWithCircleObject(circleObject) {
         const radiusSum = this.radius + circleObject.radius;
         const distanceVector = circleObject.position.subtract(this.position);
@@ -10,7 +25,7 @@ export const roundObjectMixin = {
         circleObject.position = circleObject.position.add(
             penetrationResolution,
         );
-    },
+    }
 
     resolveCollisionWithCircleObject(circleObject) {
         this._penetrationResolutionWithCircleObject(circleObject);
@@ -26,11 +41,13 @@ export const roundObjectMixin = {
         circleObject.velocity = circleObject.velocity.add(
             separatingVelocityVector.scale(-1),
         );
-    },
+    }
 
     checkCollisionWithCircleObject(circleObject) {
         const radiusSum = this.radius + circleObject.radius;
         const distanceVector = circleObject.position.subtract(this.position);
         return radiusSum >= distanceVector.getMagnitude() ? true : false;
-    },
-};
+    }
+}
+
+Object.assign(RoundObject.prototype, drawCircleMixin);

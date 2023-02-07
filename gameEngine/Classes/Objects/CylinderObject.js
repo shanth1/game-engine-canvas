@@ -1,9 +1,7 @@
+import { RoundObject } from "./_RoundObject.js";
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { drawCircleMixin } from "../Figures/_drawCircleMixin.js";
-import { _Object } from "./_Object.js";
-import { roundObjectMixin } from "./_roundObjectsMixin.js";
 
-export class CylinderObject extends _Object {
+export class CylinderObject extends RoundObject {
     constructor(
         position = new Vec2(0, 0),
         radius = 0,
@@ -11,8 +9,7 @@ export class CylinderObject extends _Object {
         roughness = 0,
         mass = 1,
     ) {
-        super(position, color, roughness, mass);
-        this.radius = radius;
+        super(position, radius, color, roughness, mass);
 
         this.surfaceList = [];
         this.surfaceRoughness = 0;
@@ -61,5 +58,3 @@ export class CylinderObject extends _Object {
         }
     }
 }
-Object.assign(CylinderObject.prototype, drawCircleMixin);
-Object.assign(CylinderObject.prototype, roundObjectMixin);

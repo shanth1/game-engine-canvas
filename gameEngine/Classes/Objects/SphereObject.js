@@ -1,8 +1,7 @@
 import { Vec2 } from "../../utils/Math/Vector.js";
-import { drawCircleMixin } from "../Figures/_drawCircleMixin.js";
-import { _Object } from "./_Object.js";
+import { RoundObject } from "./_RoundObject.js";
 
-export class SphereObject extends _Object {
+export class SphereObject extends RoundObject {
     constructor(
         position = new Vec2(0, 0),
         radius = 0,
@@ -10,12 +9,10 @@ export class SphereObject extends _Object {
         roughness = 0,
         mass = 1,
     ) {
-        super(position, color, roughness, mass);
-        this.radius = radius;
+        super(position, radius, color, roughness, mass);
     }
 
     get type() {
         return "sphere";
     }
 }
-Object.assign(SphereObject.prototype, drawCircleMixin);
