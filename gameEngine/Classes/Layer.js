@@ -36,12 +36,11 @@ export class Layer {
 
     update = () => {
         for (let i = 0; i < this._objects.length; i++) {
-            this._objects[i].surfaceList = this._surfaces; //! ???
-            this._objects[i].update();
+            const obj1 = this._objects[i];
+            obj1.update();
             if (i === this._objects.length - 1) break;
 
             for (let j = i + 1; j < this._objects.length; j++) {
-                const obj1 = this._objects[i];
                 const obj2 = this._objects[j];
                 if (obj1.checkCollisionWithObject(obj2)) {
                     obj1.resolveCollisionWithObject(obj2);
