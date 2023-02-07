@@ -12,11 +12,14 @@ export class CylinderObject extends _Object {
         mass = 1,
     ) {
         super(position, color, roughness, mass);
-        this.type = "cylinder";
         this.radius = radius;
 
         this.surfaceList = [];
         this.surfaceRoughness = 0;
+    }
+
+    get type() {
+        return "cylinder";
     }
 
     _detectCollisionWithRectangle(rectangle) {

@@ -11,8 +11,11 @@ export class SphereObject extends _Object {
         mass = 1,
     ) {
         super(position, color, roughness, mass);
-        this.type = "sphere";
         this.radius = radius;
+    }
+
+    get type() {
+        return "sphere";
     }
 }
 Object.assign(SphereObject.prototype, drawCircleMixin);

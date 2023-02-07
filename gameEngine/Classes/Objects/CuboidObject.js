@@ -12,9 +12,12 @@ export class CuboidObject extends _Object {
         mass = 0,
     ) {
         super(position, color, roughness, mass);
-        this.type = "cuboid";
         this.width = width;
         this.height = height;
+    }
+
+    get type() {
+        return "cuboid";
     }
 }
 

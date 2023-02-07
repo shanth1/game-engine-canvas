@@ -9,9 +9,12 @@ export class Rectangle extends _Figure {
         color = "black",
     ) {
         super(position, color);
-        this.type = "rectangle";
         this.width = width;
         this.height = height;
+    }
+
+    get type() {
+        return "rectangle";
     }
 }
 Object.assign(Rectangle.prototype, drawRectangleMixin);
